@@ -6,7 +6,8 @@ module ODBCAdapter
     def dbms_registry
       @dbms_registry ||= {
         /my.*sql/i => :MySQL,
-        /postgres/i => :PostgreSQL
+        /postgres/i => :PostgreSQL,
+        /snowflake/i => :Snowflake
       }
     end
 
