@@ -20,6 +20,8 @@ module ODBCAdapter
     # Returns an array of table names, for database tables visible on the
     # current connection.
     def tables(_name = nil)
+      puts caller
+      binding.pry
       stmt   = @connection.tables
       result = stmt.fetch_all || []
       stmt.drop
@@ -33,6 +35,8 @@ module ODBCAdapter
 
     # Returns an array of Column objects for the table specified by +table_name+.
     def columns(table_name, name = nil)
+      puts caller
+      binding.pry
       stmt   = @connection.columns(native_case(table_name.to_s))
       result = stmt.fetch_all || []
       stmt.drop
@@ -47,7 +51,7 @@ module ODBCAdapter
 
         # SQLColumns: IS_NULLABLE, SQLColumns: NULLABLE
         col_nullable = nullability(col_name, col[17], col[10])
-        binding.pry
+        puts "#{table_name}.#{col_name},#{col_default},#{col_sql_type},#{col_nullable},#{col_native_type},#{col_scale},#{col_limit}"
         cols << new_column(format_case(col_name), col_default, col_sql_type, col_nullable, col_native_type, col_scale, col_limit)
       end
     end
