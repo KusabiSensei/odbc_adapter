@@ -9,8 +9,6 @@ module ODBCAdapter
       BOOLEAN_TYPE = 'bool'.freeze
       PRIMARY_KEY  = 'SERIAL PRIMARY KEY'.freeze
 
-      type_map = {}
-
       # Override to handle booleans appropriately
       def native_database_types
         @native_database_types ||= super.merge(boolean: { name: 'bool' })
@@ -180,11 +178,6 @@ module ODBCAdapter
       # Quoting needs to be changed for Snowflake
       def quote_column_name(name)
         name.to_s
-      end
-
-      def lookup_cast_type(sql_type)
-        binding.pry
-        type_map[sql_type]
       end
 
       private
