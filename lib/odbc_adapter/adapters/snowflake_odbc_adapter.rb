@@ -1,8 +1,6 @@
 module ODBCAdapter
   module Adapters
-    # A default adapter used for databases that are no explicitly listed in the
-    # registry. This allows for minimal support for DBMSs for which we don't
-    # have an explicit adapter.
+
     class SnowflakeODBCAdapter < ActiveRecord::ConnectionAdapters::ODBCAdapter
       class BindSubstitution < Arel::Visitors::PostgreSQL
         include Arel::Visitors::BindVisitor
@@ -10,6 +8,8 @@ module ODBCAdapter
 
       BOOLEAN_TYPE = 'bool'.freeze
       PRIMARY_KEY  = 'SERIAL PRIMARY KEY'.freeze
+
+      type_map = {}
 
       # Override to handle booleans appropriately
       def native_database_types
@@ -180,6 +180,11 @@ module ODBCAdapter
       # Quoting needs to be changed for Snowflake
       def quote_column_name(name)
         name.to_s
+      end
+
+      def lookup_cast_type(sql_type)
+        binding.pry
+        type_map[sql_type]
       end
 
       private
