@@ -47,14 +47,8 @@ module ODBCAdapter
 
         # SQLColumns: IS_NULLABLE, SQLColumns: NULLABLE
         col_nullable = nullability(col_name, col[17], col[10])
-
-        cast_type =
-          if col_native_type == self.class::BOOLEAN_TYPE
-            ActiveRecord::Type::Boolean.new
-          else
-            col_sql_type
-          end
-        cols << new_column(format_case(col_name), col_default, cast_type, col_sql_type, col_nullable, col_native_type, col_scale, col_limit)
+        binding.pry
+        cols << new_column(format_case(col_name), col_default, col_sql_type, col_nullable, col_native_type, col_scale, col_limit)
       end
     end
 
